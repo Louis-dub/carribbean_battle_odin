@@ -1,4 +1,4 @@
-name: deploy
+name: Deploy - Launch Test
 
 run-name: ${{ github.actor }} push
 
@@ -24,3 +24,15 @@ jobs:
                 publish_dir: dist
                 force_orphan: true
                 commit_message: "Deploy ${{ github.sha }}"
+    
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v6
+            - uses: actions/setup-node@v6
+              with:
+                node-version: v20
+            - name: Install dependences
+              run: npm ci
+            - name: Launch Test
+              run: npm test
