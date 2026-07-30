@@ -3,7 +3,7 @@ class Ship {
         this.length = len;
         this.numHit = 0;
         this.sunk = false;
-        this.coor = [p1, p2];
+        this.coor = this.sortCoor(p1, p2);
     }
 
     sortCoor(p1, p2) {
@@ -11,9 +11,9 @@ class Ship {
         const d2 = p1[1] - p2[1];
 
         if (d1 < 0 || d2 < 0)
-            return [p2, p1];
-        else
             return [p1, p2];
+        else
+            return [p2, p1];
     }
 
     hit(p) {
