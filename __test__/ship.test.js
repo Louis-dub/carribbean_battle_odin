@@ -22,3 +22,13 @@ test("Miss ship s2", () => {
     expect(s2.hit([3, 4])).toBe(false);
     expect(s2.numHit).toBe(1);
 });
+
+test("isSunk true", () => {
+    s1.hit([0, 0]);
+    s1.hit([0, 2]);
+    expect(s1.isSunk()).toBe(true);
+});
+
+test("isSunk false", () => {
+    expect(s2.isSunk()).toBe(false);
+});
