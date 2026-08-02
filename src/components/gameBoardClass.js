@@ -5,17 +5,20 @@ function verifCollideShip(p1, p2, ships)
     const d0 = p2[0] - p1[0];
     const d1 = p2[1] - p1[1];
     const newCase = d0 > 0 ? [1, 0] : d1 > 0 ? [0, 1] : d0 < 0 ? [-1, 0] : [0, -1];
+    let check = false;
 
     ships.forEach(s => {
         let p = [...p1]
         while (p[0] !== p2[0] + newCase[0] || p[1] !== p2[1] + newCase[1]) {
-            if (s.hit(p))
-                return true;
+            if (s.hit(p)) {
+                check = true;
+                return;
+            }
             p[0] += newCase[0];
             p[1] += newCase[1];
         }
     });
-    return false;
+    return check;
 }
 
 function createCoor(len) {
@@ -61,6 +64,7 @@ export class GameBoard {
         this.computer = this.createBoard();
         this.playerShip = this.createShip();
         this.computerShip = this.createShip();
+        this.round = 1;
     }
 
     createBoard() {
@@ -86,5 +90,27 @@ export class GameBoard {
             ships.push(newShip);
         }
         return ships;
+    }
+
+    receiveAttack(x, y) {
+        const p = [x, y];
+
+        if (this.round === 1) {
+            this.computerShip.forEach(ship => {
+                if (ship.hit(p))
+                    this.computer[x][y] = "t";
+            });
+            if (this.computer[x][y] === "e")
+                this.computer[x][y] = "m"
+        }
+        if (this.round === -1) {
+            this.playerShip.forEach(ship => {
+                if (ship.hit(p))
+                    this.player[x][y] = "t";
+            });
+            if (this.player[x][y] === "e")
+                this.player[x][y] = "m"
+        }
+        this.round = -this.round;
     }
 }

@@ -2,6 +2,7 @@
   "name": "carribbean_battle_odin",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "jest"
   },
