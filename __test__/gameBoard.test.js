@@ -18,47 +18,22 @@ const b1 = [
     ["e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e"],
 ];
 
-const b2 = [
-    ["e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e"],
-    ["e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e"],
-    ["e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e"],
-    ["e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e"],
-    ["e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e"],
-    ["e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e"],
-    ["e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e"],
-    ["e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e"],
-    ["e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e"],
-    ["e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e"],
-    ["e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e"],
-    ["e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e", "e"],
-];
-
-board.computerShip = [];
-board.playerShip = [];
-
-board.playerShip.push(new Ship(2, [ 9, 2 ], [ 9, 4 ]));
-board.playerShip.push(new Ship(3, [ 1, 4 ], [ 1, 7 ]));
-board.playerShip.push(new Ship(4, [ 3, 5 ], [ 3, 9 ]));
-board.playerShip.push(new Ship(5, [ 4, 1 ], [ 9, 1 ]));
-board.playerShip.push(new Ship(6, [ 6, 7 ], [ 12, 7 ]));
-
-board.computerShip.push(new Ship(2, [ 12, 4 ], [ 12, 6 ]));
-board.computerShip.push(new Ship(3, [ 11, 8 ], [ 11, 11 ]));
-board.computerShip.push(new Ship(4, [ 3, 1 ], [ 7, 1 ]));
-board.computerShip.push(new Ship(5, [ 5, 3 ], [ 10, 3 ]));
-board.computerShip.push(new Ship(6, [ 5, 5 ], [ 5, 11 ]));
+board.ships.push(new Ship(2, [ 2, 7 ], [ 2, 9 ]));
+board.ships.push(new Ship(3, [ 5, 2 ], [ 5, 5 ]));
+board.ships.push(new Ship(4, [ 3, 2 ], [ 3, 6 ]));
+board.ships.push(new Ship(5, [ 2, 10 ], [ 7, 10 ]));
+board.ships.push(new Ship(6, [ 5, 7 ], [ 11, 7 ]));
 
 test("Create boards", () => {
-    expect(board.player).toEqual(b1);
-    expect(board.computer).toEqual(b2);
+    expect(board.board).toEqual(b1);
 });
 
 test("Touch Ship", () => {
-    board.receiveAttack(6, 3);
-    expect(board.computer[6][3]).toBe("t");
+    board.receiveAttack(5, 3);
+    expect(board.board[5][3]).toBe("t");
 });
 
 test("Miss Ship", () => {
-    board.receiveAttack(3, 4);
-    expect(board.player[3][4]).toBe("m");
+    board.receiveAttack(11, 4);
+    expect(board.board[11][4]).toBe("m");
 })
