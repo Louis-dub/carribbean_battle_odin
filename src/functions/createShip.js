@@ -1,5 +1,5 @@
-import { GameBoard } from "./gameBoardClass.js";
-import { Ship } from "./shipClass.js";
+import { GameBoard } from "../components/gameBoardClass.js";
+import { Ship } from "../components/shipClass.js";
 
 function verifCollideShip(p1, p2, ships)
 {
@@ -71,12 +71,4 @@ export function createShip() {
         ships.push(newShip);
     }
     return ships;
-}
-
-export class Player {
-
-}
-
-export class Computer {
-
 }
