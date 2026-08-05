@@ -1,10 +1,10 @@
-export function createGrid(type) {
+export function createGrid(type, fleet) {
     const board = document.createElement("div");
 
     board.className = "board";
     const title = document.createElement("h1");
 
-    title.textContent = type.charAt(0).toUpperCase() + type.slice(1).toLowerCase();
+    title.textContent = fleet
     const grid = document.createElement("div");
 
     grid.className = "grid";

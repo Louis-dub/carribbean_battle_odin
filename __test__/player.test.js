@@ -3,18 +3,36 @@ import { Player, Computer } from "../src/components/playerClass.js";
 const  player = new Player();
 const computer = new Computer();
 
+test("Player title", () => {
+    const title = player.gridDOM.children[0];
+
+    expect(title.tagName).toBe('H1');
+    expect(title.textContent).toBe("Your Fleet");
+})
+
+test("Player title", () => {
+    const title = computer.gridDOM.children[0];
+
+    expect(title.tagName).toBe('H1');
+    expect(title.textContent).toBe("Enemy Fleet");
+})
+
 test("player grid", () => {
-    expect(player.gridDOM.tagName).toBe('DIV');
-    expect(player.gridDOM.id).toBe('grid-player');
-    expect(player.gridDOM.children.length).toBe(144);
-    expect(player.gridDOM.children[30].tagName).toBe('DIV');
-    expect(player.gridDOM.children[30].value).toBe('2 6');
+    const grid = player.gridDOM.children[1];
+
+    expect(grid.tagName).toBe('DIV');
+    expect(grid.id).toBe('grid-player');
+    expect(grid.children.length).toBe(144);
+    expect(grid.children[30].tagName).toBe('DIV');
+    expect(grid.children[30].value).toBe('2 6');
 });
 
 test("computer grid", () => {
-    expect(computer.gridDOM.tagName).toBe('DIV');
-    expect(computer.gridDOM.id).toBe('grid-computer');
-    expect(computer.gridDOM.children.length).toBe(144);
-    expect(computer.gridDOM.children[30].tagName).toBe('DIV');
-    expect(computer.gridDOM.children[30].value).toBe('2 6');
+    const grid = computer.gridDOM.children[1];
+
+    expect(grid.tagName).toBe('DIV');
+    expect(grid.id).toBe('grid-computer');
+    expect(grid.children.length).toBe(144);
+    expect(grid.children[30].tagName).toBe('DIV');
+    expect(grid.children[30].value).toBe('2 6');
 });
