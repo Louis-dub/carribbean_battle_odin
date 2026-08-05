@@ -5,6 +5,10 @@ import { grids } from './displayGrid.js';
 
 
 document.addEventListener("DOMContentLoaded", () => {
+    const logoTitle = document.getElementById("img-logo");
+
+    if (logoTitle)
+        logoTitle.src = logo;
     const logoLink = document.createElement("link")
     logoLink.rel = "icon";
     logoLink.type = "image/png";

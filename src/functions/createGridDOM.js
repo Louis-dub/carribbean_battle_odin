@@ -1,4 +1,10 @@
 export function createGrid(type) {
+    const board = document.createElement("div");
+
+    board.className = "board";
+    const title = document.createElement("h1");
+
+    title.textContent = type.charAt(0).toUpperCase() + type.slice(1).toLowerCase();
     const grid = document.createElement("div");
 
     grid.className = "grid";
@@ -12,5 +18,7 @@ export function createGrid(type) {
             grid.appendChild(caseGrid);
         }
     }
-    return grid;
+    board.appendChild(title);
+    board.appendChild(grid);
+    return board;
 }
