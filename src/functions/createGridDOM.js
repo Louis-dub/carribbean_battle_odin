@@ -16,7 +16,7 @@ export function createGrid(type, fleet) {
             let caseGrid = document.createElement("div");
 
             caseGrid.className = "case";
-            caseGrid.setAttribute("value", `${i} ${j}`);
+            caseGrid.value = `${i} ${j}`;
             grid.appendChild(caseGrid);
         }
     }
