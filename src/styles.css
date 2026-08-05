@@ -1,0 +1,22 @@
+.grids {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    gap: 1px;
+    width: 720px;
+    margin: auto;
+}
+
+.case {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+}
