@@ -10,4 +10,4 @@ grids.className = "grids";
 grids.appendChild(player.gridDOM);
 grids.appendChild(computer.gridDOM);
 
-export { grids };
+export { grids, player, computer };

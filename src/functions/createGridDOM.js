@@ -1,3 +1,5 @@
+import { attack } from "./attack.js";
+
 export function createGrid(type, fleet) {
     const board = document.createElement("div");
 
@@ -14,9 +16,14 @@ export function createGrid(type, fleet) {
             let caseGrid = document.createElement("div");
 
             caseGrid.className = "case";
-            caseGrid.value = `${i} ${j}`;
+            caseGrid.setAttribute("value", `${i} ${j}`);
             grid.appendChild(caseGrid);
         }
+    }
+    if (type === "computer") {
+        grid.addEventListener("click", (e) => {
+            attack(this, e.target.closest(".case"));
+        });
     }
     board.appendChild(title);
     board.appendChild(grid);

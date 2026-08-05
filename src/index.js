@@ -1,7 +1,7 @@
 import './styles.css';
 import logo from './images/logo_battleship.png';
 import { Player, Computer } from './components/playerClass.js';
-import { grids } from './displayGrid.js';
+import { grids, player, computer } from './displayGrid.js';
 
 
 document.addEventListener("DOMContentLoaded", () => {
