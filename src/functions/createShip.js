@@ -69,7 +69,7 @@ export function createShip() {
             coor = createCoor(i);
         const newShip = new Ship(i, coor[0], coor[1]);
         ships.push(newShip);
-        console.log(newShip.coor);
+        console.log(JSON.stringify(newShip.coor));
     }
     return ships;
 }

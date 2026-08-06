@@ -1,44 +1,52 @@
 @import url('https://fonts.googleapis.com/css2?family=Caudex&family=RocknRoll+One&display=swap');
 
 body {
-    font-family: "RocknRoll One";
+    font-family: "RocknRoll One", sans-serif;
     color: white;
     background-color: black;
-    padding: 40px;
+    padding: clamp(16px, 4vw, 40px);
 }
 
 .title {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    gap: 8px;
+    gap: 12px;
     align-items: center;
+    text-align: center;
 }
 
 #img-logo {
-    width: 100px;
+    width: clamp(60px, 10vw, 100px);
+    height: auto;
 }
 
 h1 {
-    font-size: 4rem;
+    font-size: clamp(2.25rem, 5vw, 4rem);
+    margin: 0;
 }
 
 .grids {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    gap: 150px;
+    gap: clamp(16px, 4vw, 150px);
+    margin-top: 24px;
 }
 
 .board {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: min(100%, 640px);
 }
 
 .grid {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(12, minmax(20px, 1fr));
     gap: 4px;
-    width: 600px;
+    width: min(100%, 600px);
+    max-width: 100%;
     margin: auto;
 }
 
@@ -47,12 +55,13 @@ h1 {
 }
 
 .case {
-    width: 50px;
-    height: 50px;
+    width: 100%;
+    aspect-ratio: 1 / 1;
     display: flex;
     justify-content: center;
     align-items: center;
     border: 1px solid white;
+    min-height: 28px;
 }
 
 .miss {
@@ -61,4 +70,36 @@ h1 {
 
 .touch {
     background-color: #a52a2a48;
+}
+
+@media (max-width: 768px) {
+    .grids {
+        gap: 12px;
+    }
+
+    .grid {
+        width: min(100%, calc(100vw - 32px));
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 16px;
+    }
+
+    .title {
+        gap: 8px;
+    }
+
+    .grids {
+        gap: 10px;
+    }
+
+    .grid {
+        gap: 2px;
+    }
+
+    .case {
+        min-height: 24px;
+    }
 }
