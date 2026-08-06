@@ -5,14 +5,14 @@ import { GameBoard } from "./gameBoardClass.js";
 export class Player {
     constructor() {
         this.board = new GameBoard();
-        this.gridDOM = createGrid("player", "Your Fleet");
+        this.gridDOM = createGrid("player", "Your Fleet", this.board);
     }
 }
 
 export class Computer {
     constructor() {
         this.board = new GameBoard();
-        this.gridDOM = createGrid("computer", "Enemy Fleet");
+        this.gridDOM = createGrid("computer", "Enemy Fleet", this.board);
         this.board.ships = createShip();
     }
 }

@@ -1,6 +1,6 @@
 import { attack } from "./attack.js";
 
-export function createGrid(type, fleet) {
+export function createGrid(type, fleet, playerBoard) {
     const board = document.createElement("div");
 
     board.className = "board";
@@ -22,7 +22,7 @@ export function createGrid(type, fleet) {
     }
     if (type === "computer") {
         grid.addEventListener("click", (e) => {
-            attack(this, e.target.closest(".case"));
+            attack(playerBoard, e.target.closest(".case"));
         });
     }
     board.appendChild(title);

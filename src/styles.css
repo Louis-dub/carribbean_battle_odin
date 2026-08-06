@@ -54,3 +54,11 @@ h1 {
     align-items: center;
     border: 1px solid white;
 }
+
+.miss {
+    background-color: #00e1ff;
+}
+
+.touch {
+    background-color: #a52a2a48;
+}
