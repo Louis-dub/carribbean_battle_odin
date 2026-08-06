@@ -62,7 +62,7 @@ function createCoor(len) {
 export function createShip() {
     const ships = [];
     
-    for (let i = 2; i < 7; i++) {
+    for (let i = 1; i < 6; i++) {
         let coor = createCoor(i);
         
         while (verifCollideShip(coor[0], coor[1], ships))

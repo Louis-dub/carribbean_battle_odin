@@ -2,7 +2,7 @@ export function attack(board, pos) {
     if (!pos)
         return false;
     const val = pos.value;
-    const p = [parseInt(val[0], 10), parseInt(val[2], 10)];
+    const p = val.split(' ').map(Number);;
     
     console.log(p);
     if (board.receiveAttack(p[0], p[1]))
