@@ -1,0 +1,107 @@
+:root{
+    --void:        #0a0806;
+    --anthracite:  #16130f;
+    --wood-dark:   #2a1c11;
+    --wood-shadow: #1a1108;
+    --ember:       #ff7a29;
+    --ember-deep:   #9a2d0a;
+    --flame:       #ffc96b;
+    --smoke-rgb:   58, 52, 46;
+}
+
+html, body {
+    margin: 0;
+    height: 100%;
+}
+
+.pirate-bg{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+    padding: clamp(16px, 4vw, 40px);
+    background:
+        radial-gradient(120% 90% at 50% 20%, var(--anthracite) 0%, var(--void) 60%, #000 100%);
+    isolation: isolate;
+}
+
+.pirate-bg canvas{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.structural-layer{
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+}
+
+.beam{
+    position: absolute;
+    background: linear-gradient(180deg, var(--wood-dark) 0%, var(--wood-shadow) 100%);
+    opacity: 0.55;
+    filter: blur(1.5px);
+    box-shadow: 0 0 40px 10px rgba(0,0,0,0.6);
+}
+.beam-h{
+    left: -5%; width: 110%; height: 34px;
+}
+.beam-h.b1{ top: 4%; transform: rotate(-0.6deg); }
+.beam-h.b2{ top: 46%; transform: rotate(0.4deg); opacity:0.35; height:26px; }
+
+.beam-v{
+    top: -5%; height: 110%; width: 30px;
+    transform: skewX(-2deg);
+}
+.beam-v.b3{ left: 6%; opacity: 0.4; }
+.beam-v.b4{ right: 9%; opacity: 0.3; width:22px; }
+
+.rope{
+    position: absolute;
+    width: 3px;
+    background: linear-gradient(180deg, var(--wood-shadow), transparent 92%);
+    opacity: 0.5;
+    border-radius: 3px;
+    transform-origin: top center;
+    filter: blur(0.4px);
+}
+
+.rope.r1{ top: 3%; left: 22%; height: 40%; transform: rotate(4deg) skewX(-6deg); }
+.rope.r2{ top: 3%; left: 61%; height: 55%; transform: rotate(-6deg) skewX(4deg); opacity:0.35;}
+.rope.r3{ top: 45%; left: 78%; height: 30%; transform: rotate(8deg); opacity:0.3;}
+
+.barrel{
+    position: absolute;
+    border-radius: 45% 45% 50% 50% / 20% 20% 12% 12%;
+    background: radial-gradient(circle at 35% 30%, var(--wood-dark), var(--wood-shadow) 75%);
+    opacity: 0.45;
+    filter: blur(1px);
+}
+.barrel.k1{ width: 90px; height: 110px; left: 4%; bottom: -3%; }
+.barrel.k2{ width: 70px; height: 85px; right: 8%; bottom: -2%; opacity:0.3; }
+
+.vignette{
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+    background: radial-gradient(120% 100% at 50% 55%,
+        transparent 30%,
+        rgba(0,0,0,0.35) 70%,
+        rgba(0,0,0,0.85) 100%);
+    mix-blend-mode: multiply;
+}
+
+.grain{
+    position:absolute; inset:0; z-index:5; pointer-events:none; opacity:0.05;
+    background-image:
+        repeating-linear-gradient(0deg, #fff 0px, transparent 1px, transparent 2px),
+        repeating-linear-gradient(90deg, #fff 0px, transparent 1px, transparent 2px);
+    mix-blend-mode: overlay;
+}

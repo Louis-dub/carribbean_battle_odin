@@ -2,6 +2,7 @@ import './styles.css';
 import logo from './images/logo_battleship.png';
 import { Player, Computer } from './components/playerClass.js';
 import { grids, player, computer } from './displayGrid.js';
+import { initBackground } from './backgroud/index.js';
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -19,3 +20,5 @@ document.addEventListener("DOMContentLoaded", () => {
 const content = document.getElementById("content");
 
 content.appendChild(grids);
+
+const bgController = initBackground('pirate-bg', { particleCount: 46 });
