@@ -22,7 +22,7 @@ export function createGrid(type, fleet, playerBoard) {
     }
     if (type === "computer") {
         grid.addEventListener("click", (e) => {
-            attack(playerBoard, e.target.closest(".case"));
+            attack(grid.children, playerBoard, e.target.closest(".case"));
         });
     }
     board.appendChild(title);

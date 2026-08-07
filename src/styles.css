@@ -81,6 +81,10 @@ h1 {
     background-color: #a52a2a48;
 }
 
+.sunk {
+    background-color: #690000;
+}
+
 @media (max-width: 768px) {
     .grids {
         gap: 12px;

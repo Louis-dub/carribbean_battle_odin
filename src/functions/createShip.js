@@ -67,7 +67,7 @@ export function createShip() {
         
         while (verifCollideShip(coor[0], coor[1], ships))
             coor = createCoor(i);
-        const newShip = new Ship(i, coor[0], coor[1]);
+        const newShip = new Ship(i + 1, coor[0], coor[1]);
         ships.push(newShip);
         console.log(JSON.stringify(newShip.coor));
     }
