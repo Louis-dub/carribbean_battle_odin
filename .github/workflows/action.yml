@@ -15,9 +15,9 @@ jobs:
               with:
                 node-version: v20
             - name: Install dependences
-              run: npm install
+              run: npm ci
             - name: Create Webpack
-              run: npx webpack
+              run: npm run build
             - uses: peaceiris/actions-gh-pages@v4
               with:
                 github_token: ${{ secrets.GITHUB_TOKEN }}
