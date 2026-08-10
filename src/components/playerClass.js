@@ -3,33 +3,26 @@ import { createGrid } from "../functions/createGridDOM.js";
 import { GameBoard } from "./gameBoardClass.js";
 
 export class Player {
-    constructor() {
+    constructor(type, title) {
+        this.type = type;
         this.board = new GameBoard();
-        this.gridDOM = createGrid("player", "Your Fleet", this.board);
         this.lose = false;
-    }
-
-    isLose() {
-        let sunks = 0;
-        this.board.ships.forEach(ship => {
-            if (ship.isSunk())
-                sunks++;
-        })
-
-        if (sunks === 5) {
-            this.lose = true;
-            return true;
+        if (type === "computer") {
+            this.board.ships = createShip();
         }
-        return false;
+        this.gridDOM = this.createBoard(title);
+        this.round = false;
     }
-}
 
-export class Computer {
-    constructor() {
-        this.board = new GameBoard();
-        this.gridDOM = createGrid("computer", "Enemy Fleet", this.board);
-        this.board.ships = createShip();
-        this.lose = false;
+    createBoard(fleet) {
+        const board = document.createElement("div");
+
+        board.className = "board";
+        const title = document.createElement("h1");
+
+        title.textContent = fleet;
+        board.appendChild(title);
+        return board
     }
 
     isLose() {

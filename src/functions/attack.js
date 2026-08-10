@@ -16,10 +16,11 @@ export function attack(cases, board, pos) {
     console.log(JSON.stringify(p));
     if (pos.className === "case sunk")
         return;
-    if (board.receiveAttack(p[0], p[1])) {
+    const hit = board.receiveAttack(p[0], p[1]);
+    if (hit === 1) {
         pos.className = "case touch";
         checkSunkShip(cases, board);
     }
-    else
+    else if (hit === 2)
         pos.className = "case miss"
 }
