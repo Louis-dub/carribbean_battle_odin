@@ -1,4 +1,4 @@
-import { attack } from "./attack.js";
+import { roundPlayer } from "./rounds.js";
 
 export function createGrid(player) {
     const board = player.gridDOM;
@@ -18,7 +18,8 @@ export function createGrid(player) {
     if (player.type === "computer") {
         player.round = true;
         grid.addEventListener("click", (e) => {
-            attack(grid.children, player.board, e.target.closest(".case"));
+            if (player.play)
+                roundPlayer(grid, player, e.target.closest(".case"));
         });
     }
     board.appendChild(grid);

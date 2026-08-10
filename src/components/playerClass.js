@@ -11,7 +11,7 @@ export class Player {
             this.board.ships = createShip();
         }
         this.gridDOM = this.createBoard(title);
-        this.round = false;
+        this.play = true;
     }
 
     createBoard(fleet) {

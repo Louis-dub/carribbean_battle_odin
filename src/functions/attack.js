@@ -23,4 +23,5 @@ export function attack(cases, board, pos) {
     }
     else if (hit === 2)
         pos.className = "case miss"
+    return hit;
 }
