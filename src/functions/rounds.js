@@ -18,6 +18,8 @@ function computerRound(player) {
 }
 
 export function roundPlayer(grid, computer, pos, player) {
+    if (!pos)
+        return;
     const att = attack(grid.children, computer.board, pos);
 
     if (att !== 0) {
