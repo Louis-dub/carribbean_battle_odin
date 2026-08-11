@@ -1,14 +1,15 @@
 import { Player } from "../src/components/playerClass.js";
 import { Ship } from "../src/components/shipClass.js";
+import { createGrid } from "../src/functions/createGridDOM.js";
 
-const  player = new Player();
-const computer = new Player();
+const  player = new Player("player", "Your Fleet");
+const computer = new Player("computer", "Enemy Fleet");
 
 test("Player title", () => {
     const title = player.gridDOM.children[0];
 
     expect(title.tagName).toBe('H1');
-    expect(title.type).toBe("Your Fleet");
+    expect(title.textContent).toBe("Your Fleet");
 })
 
 test("Player title", () => {
@@ -19,6 +20,7 @@ test("Player title", () => {
 })
 
 test("player grid", () => {
+    createGrid(player)
     const grid = player.gridDOM.children[1];
 
     expect(grid.tagName).toBe('DIV');
@@ -29,6 +31,7 @@ test("player grid", () => {
 });
 
 test("computer grid", () => {
+    createGrid(computer, player)
     const grid = computer.gridDOM.children[1];
 
     expect(grid.tagName).toBe('DIV');
