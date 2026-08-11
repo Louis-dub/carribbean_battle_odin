@@ -1,16 +1,11 @@
-import { attack } from "./attack.js";
+import { roundPlayer } from "./rounds.js";
 
-export function createGrid(type, fleet, playerBoard) {
-    const board = document.createElement("div");
-
-    board.className = "board";
-    const title = document.createElement("h1");
-
-    title.textContent = fleet
+export function createGrid(player, otherPlayer = null) {
+    const board = player.gridDOM;
     const grid = document.createElement("div");
 
     grid.className = "grid";
-    grid.id = `grid-${type}`;
+    grid.id = `grid-${player.type}`;
     for (let i = 0; i < 12; i++) {
         for (let j = 0; j < 12; j++) {
             let caseGrid = document.createElement("div");
@@ -20,12 +15,12 @@ export function createGrid(type, fleet, playerBoard) {
             grid.appendChild(caseGrid);
         }
     }
-    if (type === "computer") {
+    if (player.type === "computer") {
+        player.round = true;
         grid.addEventListener("click", (e) => {
-            attack(playerBoard, e.target.closest(".case"));
+            if (player.play)
+                roundPlayer(grid, player, e.target.closest(".case"), otherPlayer);
         });
     }
-    board.appendChild(title);
     board.appendChild(grid);
-    return board;
 }

@@ -1,9 +1,7 @@
 import './styles.css';
 import logo from './images/logo_battleship.png';
-import { Player, Computer } from './components/playerClass.js';
-import { grids, player, computer } from './displayGrid.js';
+import { player, computer } from './createPlayer.js';
 import { initBackground } from './backgroud/index.js';
-
 
 document.addEventListener("DOMContentLoaded", () => {
     const logoTitle = document.getElementById("img-logo");
@@ -18,6 +16,11 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 const content = document.getElementById("content");
+const grids = document.createElement("div");
+
+grids.className = "grids";
+grids.appendChild(player.gridDOM);
+grids.appendChild(computer.gridDOM);
 
 content.appendChild(grids);
 

@@ -19,16 +19,18 @@ export class GameBoard {
 
     receiveAttack(x, y) {
         const p = [x, y];
-        let result = false;
+        let result = 0;
 
         this.ships.forEach(ship => {
-            if (ship.hit(p)) {
+            if (this.board[x][y] === "e" && ship.hit(p)) {
                 this.board[x][y] = "t";
-                result = true;
+                result = 1;
             }
         });
-        if (this.board[x][y] === "e")
+        if (this.board[x][y] === "e") {
             this.board[x][y] = "m";
+            result = 2;
+        }
         return result;
     }
 }
