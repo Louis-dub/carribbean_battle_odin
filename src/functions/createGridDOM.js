@@ -1,6 +1,6 @@
 import { roundPlayer } from "./rounds.js";
 
-export function createGrid(player) {
+export function createGrid(player, otherPlayer = null) {
     const board = player.gridDOM;
     const grid = document.createElement("div");
 
@@ -19,7 +19,7 @@ export function createGrid(player) {
         player.round = true;
         grid.addEventListener("click", (e) => {
             if (player.play)
-                roundPlayer(grid, player, e.target.closest(".case"));
+                roundPlayer(grid, player, e.target.closest(".case"), otherPlayer);
         });
     }
     board.appendChild(grid);

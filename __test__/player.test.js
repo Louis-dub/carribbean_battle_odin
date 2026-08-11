@@ -1,14 +1,14 @@
-import { Player, Computer } from "../src/components/playerClass.js";
+import { Player } from "../src/components/playerClass.js";
 import { Ship } from "../src/components/shipClass.js";
 
 const  player = new Player();
-const computer = new Computer();
+const computer = new Player();
 
 test("Player title", () => {
     const title = player.gridDOM.children[0];
 
     expect(title.tagName).toBe('H1');
-    expect(title.textContent).toBe("Your Fleet");
+    expect(title.type).toBe("Your Fleet");
 })
 
 test("Player title", () => {

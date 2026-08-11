@@ -12,8 +12,7 @@ export function attack(cases, board, pos) {
         return false;
     const val = pos.value;
     const p = val.split(' ').map(Number);;
-    
-    console.log(JSON.stringify(p));
+
     if (pos.className === "case sunk")
         return 0;
     const hit = board.receiveAttack(p[0], p[1]);

@@ -8,6 +8,6 @@ const computer = new Player("computer", "Enemy Fleet");
 player.board.ships = createShip();
 
 createGrid(player);
-createGrid(computer);
+createGrid(computer, player);
 
 export { player, computer };
