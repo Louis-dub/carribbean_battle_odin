@@ -100,5 +100,15 @@ test("shoudl call roundPlayer", () => {
     const caseElement = computer.gridDOM.querySelector('.case');
     caseElement.click();
 
+    expect(roundPlayer).toHaveBeenCalledTimes(1);
     expect(roundPlayer).toHaveBeenCalledWith(computer.gridDOM.children[1], computer, caseElement, player);
+});
+
+test("shoudl not call roundPlayer", () => {
+    jest.clearAllMocks();
+    computer.play = false;
+    const caseElement = computer.gridDOM.querySelector('.case');
+    caseElement.click();
+
+    expect(roundPlayer).not.toHaveBeenCalled();
 });
