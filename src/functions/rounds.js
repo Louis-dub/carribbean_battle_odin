@@ -1,6 +1,6 @@
 import { attack } from "./attack.js";
 
-function computerRound(player) {
+export function computerRound(player) {
     let p = [Math.floor(Math.random() * 12), Math.floor(Math.random() * 12)];
     let hit = player.board.receiveAttack(p[0], p[1]);
 
@@ -19,7 +19,7 @@ function computerRound(player) {
 
 export function roundPlayer(grid, computer, pos, player) {
     if (!pos)
-        return;
+        return false;
     const att = attack(grid.children, computer.board, pos);
 
     if (att !== 0) {
@@ -40,4 +40,5 @@ export function roundPlayer(grid, computer, pos, player) {
             }
         }
     }
+    return true;
 }

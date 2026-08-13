@@ -8,13 +8,9 @@ function checkSunkShip(cases, board) {
 }
 
 export function attack(cases, board, pos) {
-    if (!pos)
-        return false;
     const val = pos.value;
     const p = val.split(' ').map(Number);;
 
-    if (pos.className === "case sunk")
-        return 0;
     const hit = board.receiveAttack(p[0], p[1]);
     if (hit === 1) {
         pos.className = "case touch";

@@ -1,9 +1,14 @@
 import { Player } from "../src/components/playerClass.js";
 import { Ship } from "../src/components/shipClass.js";
+import { roundPlayer } from "../src/functions/rounds.js";
 import { createGrid } from "../src/functions/createGridDOM.js";
 
 const  player = new Player("player", "Your Fleet");
 const computer = new Player("computer", "Enemy Fleet");
+
+jest.mock('../src/functions/rounds', () => ({
+    roundPlayer: jest.fn(),
+}));
 
 test("Player title", () => {
     const title = player.gridDOM.children[0];
@@ -89,4 +94,21 @@ test("Player.isLose returns true and flips lose when the whole fleet is sunk", (
 
     expect(testPlayer.isLose()).toBe(true);
     expect(testPlayer.lose).toBe(true);
+});
+
+test("shoudl call roundPlayer", () => {
+    const caseElement = computer.gridDOM.querySelector('.case');
+    caseElement.click();
+
+    expect(roundPlayer).toHaveBeenCalledTimes(1);
+    expect(roundPlayer).toHaveBeenCalledWith(computer.gridDOM.children[1], computer, caseElement, player);
+});
+
+test("shoudl not call roundPlayer", () => {
+    jest.clearAllMocks();
+    computer.play = false;
+    const caseElement = computer.gridDOM.querySelector('.case');
+    caseElement.click();
+
+    expect(roundPlayer).not.toHaveBeenCalled();
 });
