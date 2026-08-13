@@ -1,7 +1,6 @@
-import { GameBoard } from "../components/gameBoardClass.js";
 import { Ship } from "../components/shipClass.js";
 
-function verifCollideShip(p1, p2, ships)
+export function verifCollideShip(p1, p2, ships)
 {
     const d0 = p2[0] - p1[0];
     const d1 = p2[1] - p1[1];
@@ -22,7 +21,7 @@ function verifCollideShip(p1, p2, ships)
     return check;
 }
 
-function createCoor(len) {
+export function createCoor(len) {
     let p1 = [Math.floor(Math.random() * 12), Math.floor(Math.random() * 12)];
     let p2 = [];
     let sens = Math.floor(Math.random() * 4) + 1;
