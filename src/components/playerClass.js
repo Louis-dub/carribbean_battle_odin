@@ -12,6 +12,8 @@ export class Player {
         }
         this.gridDOM = this.createBoard(title);
         this.play = true;
+        this.shipTouch = undefined;
+        this.caseTouch = undefined;
     }
 
     createBoard(fleet) {
