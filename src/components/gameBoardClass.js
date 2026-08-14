@@ -33,4 +33,8 @@ export class GameBoard {
         }
         return result;
     }
+
+    findShipHit(p) {
+        return this.ships.find(ship => ship.hit(p) === true);
+    }
 }
