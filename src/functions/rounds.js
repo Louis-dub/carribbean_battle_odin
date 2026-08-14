@@ -1,20 +1,77 @@
 import { attack } from "./attack.js";
 
-export function computerRound(player) {
-    let p = [Math.floor(Math.random() * 12), Math.floor(Math.random() * 12)];
-    let hit = player.board.receiveAttack(p[0], p[1]);
+function findCaseWhenShipTouch(player) {
+    let sens = Math.floor(Math.random() * 4);
+    const cases = [[0, -1], [0, 1], [1, 0], [-1, 0]];
+    let nextCase = [player.caseTouch[0] + cases[sens][0], player.caseTouch[1] + cases[sens][1]], sens;
 
-    while (hit === 0) {
-        p = [Math.floor(Math.random() * 12), Math.floor(Math.random() * 12)];
-        hit = player.board.receiveAttack(p[0], p[1]);
+    while (nextCase[0] < 0 || nextCase[1] < 0 || nextCase[0] > 11 || nextCase[1] > 11) {
+        sens++;
+        sens %= 4;
+        nextCase = [player.caseTouch[0] + cases[sens][0], player.caseTouch[1] + cases[sens][1], sens];
     }
-    const caseHit = Array.from(player.gridDOM.children[1].children).find(c =>
-            c.value === `${p[0]} ${p[1]}`
-    );
-    if (hit === 1)
-        caseHit.className = "case sunk";
-    if (hit === 2)
-        caseHit.className = "case miss";
+
+    return nextCase;
+}
+
+export function computerRound(player) {
+    if (!player.shipTouch) {
+        let p = [Math.floor(Math.random() * 12), Math.floor(Math.random() * 12)];
+        let hit = player.board.receiveAttack(p[0], p[1]);
+
+        while (hit === 0) {
+            p = [Math.floor(Math.random() * 12), Math.floor(Math.random() * 12)];
+            hit = player.board.receiveAttack(p[0], p[1]);
+        }
+        const caseHit = Array.from(player.gridDOM.children[1].children).find(c =>
+                c.value === `${p[0]} ${p[1]}`
+        );
+        if (hit === 1) {
+            player.shipTouch = player.board.findShipHit(p);
+            player.caseTouch = p;
+            caseHit.className = "case sunk";
+        }
+        if (hit === 2)
+            caseHit.className = "case miss";
+    } else {
+        if (!player.sens) {
+            let p = findCaseWhenShipTouch(player);
+            let hit = player.board.receiveAttack(p[0], p[1]);
+
+            while (hit === 0) {
+                nextCase = findCaseWhenShipTouch(player);
+                hit = player.board.receiveAttack(p[0], p[1]);
+            }
+            const caseHit = Array.from(player.gridDOM.children[1].children).find(c =>
+                c.value === `${p[0]} ${p[1]}`
+            );
+            if (hit === 1) {
+                player.shipTouch = player.board.findShipHit(p);
+                player.caseTouch = p;
+                player.sens = p[2];
+                caseHit.className = "case sunk";
+                if (player.shipTouch.isSunk()) {
+                    player.shipTouch = undefined;
+                    player.caseTouch = undefined;
+                    player.sens = undefined;
+                }
+            }
+            if (hit === 2)
+                caseHit.className = "case miss";
+        } else {
+            const p = [player.caseTouch[0] + player.sens[0], player.caseTouch[1] + player.sens[1]];
+            player.board.receiveAttack(p[0], p[1]);
+            const caseHit = Array.from(player.gridDOM.children[1].children).find(c =>
+                c.value === `${p[0]} ${p[1]}`);
+            caseHit.className = "case sunk";
+            player.caseTouch = p;
+            if (player.shipTouch.isSunk()) {
+                player.shipTouch = undefined;
+                player.caseTouch = undefined;
+                player.sens = undefined;
+            }
+        }
+    }
 }
 
 export function roundPlayer(grid, computer, pos, player) {
