@@ -3,7 +3,7 @@ import { attack } from "./attack.js";
 function findCaseWhenShipTouch(player) {
     let sens = Math.floor(Math.random() * 4);
     const cases = [[0, -1], [0, 1], [1, 0], [-1, 0]];
-    let nextCase = [player.caseTouch[0] + cases[sens][0], player.caseTouch[1] + cases[sens][1]], sens;
+    let nextCase = [player.caseTouch[0] + cases[sens][0], player.caseTouch[1] + cases[sens][1], sens];
 
     while (nextCase[0] < 0 || nextCase[1] < 0 || nextCase[0] > 11 || nextCase[1] > 11) {
         sens++;
@@ -39,7 +39,7 @@ export function computerRound(player) {
             let hit = player.board.receiveAttack(p[0], p[1]);
 
             while (hit === 0) {
-                nextCase = findCaseWhenShipTouch(player);
+                p = findCaseWhenShipTouch(player);
                 hit = player.board.receiveAttack(p[0], p[1]);
             }
             const caseHit = Array.from(player.gridDOM.children[1].children).find(c =>
@@ -60,15 +60,21 @@ export function computerRound(player) {
                 caseHit.className = "case miss";
         } else {
             const p = [player.caseTouch[0] + player.sens[0], player.caseTouch[1] + player.sens[1]];
-            player.board.receiveAttack(p[0], p[1]);
+            const hit = player.board.receiveAttack(p[0], p[1]);
             const caseHit = Array.from(player.gridDOM.children[1].children).find(c =>
                 c.value === `${p[0]} ${p[1]}`);
-            caseHit.className = "case sunk";
-            player.caseTouch = p;
-            if (player.shipTouch.isSunk()) {
-                player.shipTouch = undefined;
-                player.caseTouch = undefined;
-                player.sens = undefined;
+            if (hit === 1) {
+                caseHit.className = "case sunk";
+                player.caseTouch = p;
+                if (player.shipTouch.isSunk()) {
+                    player.shipTouch = undefined;
+                    player.caseTouch = undefined;
+                    player.sens = undefined;
+                }
+            } else {
+                caseHit.className = "case sunk";
+                player.sens = [player.sens[0] * -1, player.sens[1] * -1];
+                player.caseTouch = [player.caseTouch[0] + player.sens[0] * player.shipTouch.numHit, player.caseTouch[0] + player.sens[0] * player.shipTouch.numHit[1]];
             }
         }
     }
