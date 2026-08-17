@@ -2,7 +2,7 @@ import { attack } from "./attack.js";
 import { computerSunkShip } from "./computerRound.js";
 
 export function computerRound(player) {
-    if (!player.shipTouch) {
+    if (player.shipsTouch.length === 0) {
         let p = [Math.floor(Math.random() * 12), Math.floor(Math.random() * 12)];
         let hit = player.board.receiveAttack(p[0], p[1]);
 
@@ -14,7 +14,7 @@ export function computerRound(player) {
                 c.value === `${p[0]} ${p[1]}`
         );
         if (hit === 1) {
-            player.shipTouch = player.board.findShipHit(p);
+            player.shipsTouch.push(player.board.findShipHit(p));
             player.caseTouch = p;
             caseHit.className = "case sunk";
         }
