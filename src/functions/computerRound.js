@@ -6,14 +6,14 @@ const DIRECTIONS = [
 ];
 
 function isValidCase(x, y) {
-    return x > 0 && x < 11 && y > 0 && y < 11;
+    return x >= 0 && x <= 11 && y >= 0 && y <= 11;
 }
 
 function findOgCase(player) {
     let p = player.caseTouch;
     let nextP = player.caseTouch;
 
-    while (player.gameBoard.board[nextP[0]][nextP[1]] === "t") {
+    while (player.board.board[nextP[0]][nextP[1]] === "t") {
         p = nextP;
         nextP = [p[0] + player.sens[0], p[1] + player.sens[1]];
     }
@@ -51,15 +51,30 @@ export function computerSunkShip(player) {
     );
     if (hit === 2) {
         caseHit.className = "case miss";
-        player.caseTouch = findOgCase(player);
+        if (player.sens) {
+            player.sens = [player.sens[0] * -1, player.sens[1] * -1];
+            player.caseTouch = findOgCase(player);
+        }
     } else {
         caseHit.className = "case sunk";
         if (!player.sens)
-            player.sens = p[2];
+            player.sens = DIRECTIONS[p[2] % 4];
         player.caseTouch = p;
         if (!isValidCase(p[0] + player.sens[0], p[1] + player.sens[1])) {
             player.sens = [player.sens[0] * -1, player.sens[1] * -1];
             player.caseTouch = findOgCase(player);
+        }
+        const shipTouch = player.board.findShipHit(p);
+        if (!player.shipsTouch.includes(shipTouch))
+            player.shipsTouch.push(shipTouch);
+        if (shipTouch.isSunk()) {
+            const id = player.shipsTouch.indexOf(shipTouch);
+            player.shipsTouch.splice(id, 1);
+            player.sens = undefined;
+            if (player.shipsTouch.length === 0)
+                player.caseTouch = undefined;
+            else
+                player.caseTouch = player.board.findHitOnShip(player.shipsTouch[0]);
         }
     }
 }

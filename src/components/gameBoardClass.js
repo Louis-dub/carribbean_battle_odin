@@ -38,4 +38,19 @@ export class GameBoard {
         return this.ships.find(ship => ship.coor[0][0] <= p[0] && ship.coor[1][0] >= p[0] &&
             ship.coor[0][1] <= p[1] && ship.coor[1][1] >= p[1] === true);
     }
+
+    findHitOnShip(ship) {
+        let p = ship.coor[0];
+        let sens = [];
+        if (ship.coor[1][1] - ship.coor[0][1] > 0)
+            sens = [0, 1];
+        else
+            sens = [1, 0];
+        while (p !== ship.coor[1]) {
+            if (this.board[p[0]][p[1]] === "t")
+                return p;
+            p = [p[0] + sens[0], p[1] + sens[1]];
+        }
+        return undefined;
+    }
 }
