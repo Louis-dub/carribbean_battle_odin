@@ -66,13 +66,17 @@ export function computerRound(player) {
             if (hit === 1) {
                 caseHit.className = "case sunk";
                 player.caseTouch = p;
+                if (player.caseTouch[0] - player.sens[0] < 0 || player.caseTouch[1] - player.sens[1] < 0 || player.caseTouch[0] + player.sens[0] > 11 || player.caseTouch[1] + player.sens[1] > 11) {
+                    player.sens = [player.sens[0] * -1, player.sens[1] * -1];
+                    player.caseTouch = [player.caseTouch[0] + player.sens[0] * player.shipTouch.numHit, player.caseTouch[0] + player.sens[0] * player.shipTouch.numHit[1]];
+                }
                 if (player.shipTouch.isSunk()) {
                     player.shipTouch = undefined;
                     player.caseTouch = undefined;
                     player.sens = undefined;
                 }
             } else {
-                caseHit.className = "case sunk";
+                caseHit.className = "case miss";
                 player.sens = [player.sens[0] * -1, player.sens[1] * -1];
                 player.caseTouch = [player.caseTouch[0] + player.sens[0] * player.shipTouch.numHit, player.caseTouch[0] + player.sens[0] * player.shipTouch.numHit[1]];
             }
