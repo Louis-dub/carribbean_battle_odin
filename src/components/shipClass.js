@@ -16,10 +16,11 @@ export class Ship {
             return [p2, p1];
     }
 
-    hit(p) {
+    hit(p, incr = false) {
         if (this.coor[0][0] <= p[0] && this.coor[1][0] >= p[0] &&
             this.coor[0][1] <= p[1] && this.coor[1][1] >= p[1]) {
-            this.numHit++;
+            if (incr)
+                this.numHit++;
             return true;
         }
         return false;

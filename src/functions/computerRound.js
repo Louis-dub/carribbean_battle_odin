@@ -7,7 +7,7 @@ const DIRECTIONS = [
     [1, 0],
 ];
 
-function isValidCase(x, y) {
+export function isValidCase(x, y) {
     return x >= 0 && x <= 11 && y >= 0 && y <= 11;
 }
 
