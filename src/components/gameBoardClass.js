@@ -18,24 +18,18 @@ export class GameBoard {
     }
 
     receiveAttack(x, y) {
+        if (this.board[x][y] !== "e")
+            return 0;
         const p = [x, y];
-        let result = 0;
 
-        console.log("new test");
-        this.ships.forEach(ship => {
-            console.log("Ship.coor : ", JSON.stringify(ship.coor));
-            console.log("Hit : ", JSON.stringify(p));
-            if (this.board[x][y] === "e" && ship.hit(p)) {
+        for (const ship of this.ships) {
+            if (ship.hit(p)) {
                 this.board[x][y] = "t";
-                result = 1;
-                console.log("lalalal");
+                return 1;
             }
-        });
-        if (this.board[x][y] === "e") {
-            this.board[x][y] = "m";
-            result = 2;
         }
-        return result;
+        this.board[x][y] = "m";
+        return 2;
     }
 
     findShipHit(p) {
