@@ -1,6 +1,6 @@
 export function changeColourShip(cases, ship, className) {
-    let p1 = ship.coor[0];
-    let p2 = ship.coor[1];
+    let p1 = [...ship.coor[0]];
+    let p2 = [...ship.coor[1]];
     let next = [];
     let d = p2[0] - p1[0];
 

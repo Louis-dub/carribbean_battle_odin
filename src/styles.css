@@ -77,12 +77,16 @@ h1 {
     background-color: #00e1ff;
 }
 
+.ship-player {
+    background-color: #921d1d67;
+}
+
 .touch {
-    background-color: #a52a2a48;
+    background-color: #690000;
 }
 
 .sunk {
-    background-color: #690000;
+    background-color: #00084e;
 }
 
 @media (max-width: 768px) {

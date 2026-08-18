@@ -1,20 +1,28 @@
 import { attack } from "./attack.js";
+import { computerSunkShip } from "./computerRound.js";
 
 export function computerRound(player) {
-    let p = [Math.floor(Math.random() * 12), Math.floor(Math.random() * 12)];
-    let hit = player.board.receiveAttack(p[0], p[1]);
+    if (player.shipsTouch.length === 0) {
+        let p = [Math.floor(Math.random() * 12), Math.floor(Math.random() * 12)];
+        let hit = player.board.receiveAttack(p[0], p[1]);
 
-    while (hit === 0) {
-        p = [Math.floor(Math.random() * 12), Math.floor(Math.random() * 12)];
-        hit = player.board.receiveAttack(p[0], p[1]);
+        while (hit === 0) {
+            p = [Math.floor(Math.random() * 12), Math.floor(Math.random() * 12)];
+            hit = player.board.receiveAttack(p[0], p[1]);
+        }
+        const caseHit = Array.from(player.gridDOM.children[1].children).find(c =>
+                c.value === `${p[0]} ${p[1]}`
+        );
+        if (hit === 1) {
+            player.shipsTouch.push(player.board.findShipHit(p));
+            player.caseTouch = p;
+            caseHit.className = "case touch";
+        }
+        if (hit === 2)
+            caseHit.className = "case miss";
+    } else {
+        computerSunkShip(player);
     }
-    const caseHit = Array.from(player.gridDOM.children[1].children).find(c =>
-            c.value === `${p[0]} ${p[1]}`
-    );
-    if (hit === 1)
-        caseHit.className = "case sunk";
-    if (hit === 2)
-        caseHit.className = "case miss";
 }
 
 export function roundPlayer(grid, computer, pos, player) {
