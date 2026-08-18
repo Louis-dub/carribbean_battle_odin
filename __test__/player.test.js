@@ -57,13 +57,13 @@ test("Player.isLose returns false when fleet is only partially sunk", () => {
 
     testPlayer.board.ships = [shipOne, shipTwo, shipThree, shipFour, shipFive];
 
-    shipOne.hit([0, 0]);
-    shipOne.hit([0, 1]);
+    shipOne.hit([0, 0], true);
+    shipOne.hit([0, 1], true);
     shipOne.isSunk();
 
-    shipTwo.hit([1, 0]);
-    shipTwo.hit([1, 1]);
-    shipTwo.hit([1, 2]);
+    shipTwo.hit([1, 0], true);
+    shipTwo.hit([1, 1], true);
+    shipTwo.hit([1, 2], true);
     shipTwo.isSunk();
 
     expect(testPlayer.isLose()).toBe(false);
@@ -82,7 +82,7 @@ test("Player.isLose returns true and flips lose when the whole fleet is sunk", (
     testPlayer.board.ships = [shipOne, shipTwo, shipThree, shipFour, shipFive];
 
     const sink = (ship, coords) => {
-        coords.forEach(coord => ship.hit(coord));
+        coords.forEach(coord => ship.hit(coord, true));
         ship.isSunk();
     };
 

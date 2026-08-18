@@ -1,71 +1,121 @@
-import { GameBoard } from "../src/components/gameBoardClass.js";
 import { computerRound, roundPlayer } from "../src/functions/rounds.js";
+import { computerSunkShip } from "../src/functions/computerRound.js";
+
+jest.mock("../src/functions/computerRound.js", () => ({
+    computerSunkShip: jest.fn(),
+}));
 
 describe("computerRound", () => {
-    it("should update the class of the attacked cell based on a miss attack", () => {
-        const mockPlayer = {
-            board: {
-                receiveAttack: jest.fn().mockImplementation((x, y) => {
-                    return 2;
-                }),
-                ships: []
-            },
-            gridDOM: {
-                children: [
-                    null,
-                    {
-                        children: [
-                            { value: "0 0", className: ""},
-                            { value: "0 1", className: ""},
-                            { value: "0 2", className: ""},
-                            { value: "0 3", className: ""},
-                            { value: "1 0", className: ""},
-                            { value: "2 0", className: ""},
-                            { value: "3 0", className: ""}
-                        ]
-                    }
-                ]
-            }
-        };
-        jest.spyOn(Math, "random").mockReturnValue(0);
-        computerRound(mockPlayer);
-
-        const hit = mockPlayer.gridDOM.children[1].children.find(c => c.value === "0 0");
-        expect(hit.className).toBe("case miss");
+    afterEach(() => {
+        jest.restoreAllMocks();
+        computerSunkShip.mockClear();
     });
 
-    it("should update the class of the attacked cell based on the attack result", () => {
-        let callCount = 0;
+    it("should delegate to computerSunkShip when the player already has ships being tracked", () => {
         const mockPlayer = {
+            shipsTouch: [{ length: 3 }],
             board: {
-                receiveAttack: jest.fn().mockImplementation((x, y) => {
-                    callCount++;
-                    return callCount < 3 ? 0 : 1;
-                }),
-                ships: []
+                receiveAttack: jest.fn(),
+                findShipHit: jest.fn(),
+            },
+            gridDOM: {
+                children: [null, { children: [] }],
+            },
+        };
+
+        computerRound(mockPlayer);
+
+        expect(computerSunkShip).toHaveBeenCalledWith(mockPlayer);
+        expect(mockPlayer.board.receiveAttack).not.toHaveBeenCalled();
+    });
+
+    it("should mark the attacked cell as a miss when the random attack misses", () => {
+        const mockPlayer = {
+            shipsTouch: [],
+            board: {
+                receiveAttack: jest.fn().mockReturnValue(2),
+                findShipHit: jest.fn(),
             },
             gridDOM: {
                 children: [
                     null,
                     {
                         children: [
-                            { value: "0 0", className: ""},
-                            { value: "0 1", className: ""},
-                            { value: "0 2", className: ""},
-                            { value: "0 3", className: ""},
-                            { value: "1 0", className: ""},
-                            { value: "2 0", className: ""},
-                            { value: "3 0", className: ""}
-                        ]
-                    }
-                ]
-            }
+                            { value: "0 0", className: "" },
+                            { value: "0 1", className: "" },
+                        ],
+                    },
+                ],
+            },
         };
         jest.spyOn(Math, "random").mockReturnValue(0);
+
         computerRound(mockPlayer);
 
-        const hit = mockPlayer.gridDOM.children[1].children.find(c => c.value === "0 0");
-        expect(hit.className).toBe("case sunk");
+        const hitCell = mockPlayer.gridDOM.children[1].children.find(c => c.value === "0 0");
+        expect(hitCell.className).toBe("case miss");
+        expect(mockPlayer.board.receiveAttack).toHaveBeenCalledWith(0, 0);
+        expect(mockPlayer.shipsTouch).toHaveLength(0);
+    });
+
+    it("should mark the attacked cell as a touch, register the ship and set caseTouch when the attack hits", () => {
+        const mockShip = { length: 3 };
+        const mockPlayer = {
+            shipsTouch: [],
+            board: {
+                receiveAttack: jest.fn().mockReturnValue(1),
+                findShipHit: jest.fn().mockReturnValue(mockShip),
+            },
+            gridDOM: {
+                children: [
+                    null,
+                    {
+                        children: [
+                            { value: "0 0", className: "" },
+                        ],
+                    },
+                ],
+            },
+        };
+        jest.spyOn(Math, "random").mockReturnValue(0);
+
+        computerRound(mockPlayer);
+
+        const hitCell = mockPlayer.gridDOM.children[1].children.find(c => c.value === "0 0");
+        expect(hitCell.className).toBe("case touch");
+        expect(mockPlayer.shipsTouch).toContain(mockShip);
+        expect(mockPlayer.caseTouch).toEqual([0, 0]);
+    });
+
+    it("should keep drawing new coordinates while receiveAttack reports an already-attacked cell", () => {
+        let callCount = 0;
+        const mockPlayer = {
+            shipsTouch: [],
+            board: {
+                receiveAttack: jest.fn().mockImplementation(() => {
+                    callCount++;
+                    return callCount < 3 ? 0 : 2;
+                }),
+                findShipHit: jest.fn(),
+            },
+            gridDOM: {
+                children: [
+                    null,
+                    {
+                        children: [
+                            { value: "0 0", className: "" },
+                        ],
+                    },
+                ],
+            },
+        };
+        jest.spyOn(Math, "random").mockReturnValue(0);
+
+        computerRound(mockPlayer);
+
+        expect(mockPlayer.board.receiveAttack).toHaveBeenCalledTimes(3);
+        const hitCell = mockPlayer.gridDOM.children[1].children.find(c => c.value === "0 0");
+        expect(hitCell.className).toBe("case miss");
     });
 });
 
@@ -74,61 +124,63 @@ describe("roundPlayer", () => {
 
     beforeEach(() => {
         jest.clearAllMocks();
+        jest.spyOn(Math, "random").mockReturnValue(0);
 
         mockGrid = {
-            style: { cursor: 'pointer' },
+            style: { cursor: "pointer" },
             children: [
-                { value: "0 0", className: ""},
-                { value: "0 1", className: ""},
-                { value: "0 2", className: ""},
-                { value: "0 3", className: ""},
-                { value: "1 0", className: ""},
-                { value: "2 0", className: ""},
-                { value: "3 0", className: ""}
-            ]
+                { value: "0 0", className: "" },
+                { value: "0 1", className: "" },
+                { value: "0 2", className: "" },
+                { value: "0 3", className: "" },
+                { value: "1 0", className: "" },
+                { value: "2 0", className: "" },
+                { value: "3 0", className: "" },
+            ],
         };
 
         mockComputer = {
             board: {
-                receiveAttack: jest.fn().mockImplementation((x, y) => {
-                    return 1;
-                }),
-                ships: []
+                receiveAttack: jest.fn().mockReturnValue(1),
+                ships: [],
             },
             isLose: jest.fn(),
-            play: true
+            play: true,
         };
 
         mockPos = {
             value: "0 0",
-            className: "case"
+            className: "case",
         };
 
         mockPlayer = {
             board: {
-                receiveAttack: jest.fn().mockImplementation((x, y) => {
-                    return 1;
-                }),
-                ships: []
+                receiveAttack: jest.fn().mockReturnValue(2),
+                findShipHit: jest.fn(),
             },
             gridDOM: {
                 children: [
                     null,
                     {
                         children: [
-                            { value: "0 0", className: ""},
-                            { value: "0 1", className: ""},
-                            { value: "0 2", className: ""},
-                            { value: "0 3", className: ""},
-                            { value: "1 0", className: ""},
-                            { value: "2 0", className: ""},
-                            { value: "3 0", className: ""}
-                        ]
-                    }
-                ]
+                            { value: "0 0", className: "" },
+                            { value: "0 1", className: "" },
+                            { value: "0 2", className: "" },
+                            { value: "0 3", className: "" },
+                            { value: "1 0", className: "" },
+                            { value: "2 0", className: "" },
+                            { value: "3 0", className: "" },
+                        ],
+                    },
+                ],
             },
-            isLose: jest.fn()
+            shipsTouch: [],
+            isLose: jest.fn(),
         };
+    });
+
+    afterEach(() => {
+        jest.restoreAllMocks();
     });
 
     it("should return false when pos doesn't exist", () => {
@@ -143,17 +195,17 @@ describe("roundPlayer", () => {
         expect(mockComputer.board.receiveAttack).toHaveBeenCalled();
         expect(mockComputer.isLose).not.toHaveBeenCalled();
         expect(mockPlayer.board.receiveAttack).not.toHaveBeenCalled();
-        expect(mockGrid.style.cursor).toBe('pointer');
+        expect(mockGrid.style.cursor).toBe("pointer");
         expect(result).toBe(true);
     });
 
-    it("should update the grid cursor and call computerRound when attack is successful and player is not losing", () => {
+    it("should update the grid cursor and run the computer's round when attack is successful and player is not losing", () => {
         mockComputer.isLose.mockReturnValue(false);
         mockPlayer.isLose.mockReturnValue(false);
 
         roundPlayer(mockGrid, mockComputer, mockPos, mockPlayer);
 
-        expect(mockGrid.style.cursor).toBe('pointer');
+        expect(mockGrid.style.cursor).toBe("pointer");
         expect(mockPlayer.board.receiveAttack).toHaveBeenCalled();
         expect(mockComputer.play).toBe(true);
         expect(mockPlayer.isLose).toHaveBeenCalled();
@@ -164,15 +216,15 @@ describe("roundPlayer", () => {
         mockPlayer.isLose.mockReturnValue(false);
 
         document.getElementById = jest.fn().mockReturnValue({
-            innerHTML: ''
+            innerHTML: "",
         });
 
         roundPlayer(mockGrid, mockComputer, mockPos, mockPlayer);
 
-        expect(mockGrid.style.cursor).toBe('auto');
+        expect(mockGrid.style.cursor).toBe("auto");
         expect(mockComputer.play).toBe(false);
-        expect(document.getElementById).toHaveBeenCalledWith('content');
-        expect(document.getElementById('content').innerHTML).toContain('You win !!!');
+        expect(document.getElementById).toHaveBeenCalledWith("content");
+        expect(document.getElementById("content").innerHTML).toContain("You win !!!");
     });
 
     it("should update the grid cursor and display lose message when attack is successful and player is losing", () => {
@@ -180,14 +232,14 @@ describe("roundPlayer", () => {
         mockPlayer.isLose.mockReturnValue(true);
 
         document.getElementById = jest.fn().mockReturnValue({
-            innerHTML: ''
+            innerHTML: "",
         });
 
         roundPlayer(mockGrid, mockComputer, mockPos, mockPlayer);
 
-        expect(mockGrid.style.cursor).toBe('auto');
+        expect(mockGrid.style.cursor).toBe("auto");
         expect(mockComputer.play).toBe(false);
-        expect(document.getElementById).toHaveBeenCalledWith('content');
-        expect(document.getElementById('content').innerHTML).toContain('You Lose !!!');
+        expect(document.getElementById).toHaveBeenCalledWith("content");
+        expect(document.getElementById("content").innerHTML).toContain("You Lose !!!");
     });
 });
