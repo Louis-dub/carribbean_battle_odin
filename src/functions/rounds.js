@@ -16,7 +16,7 @@ export function computerRound(player) {
         if (hit === 1) {
             player.shipsTouch.push(player.board.findShipHit(p));
             player.caseTouch = p;
-            caseHit.className = "case sunk";
+            caseHit.className = "case touch";
         }
         if (hit === 2)
             caseHit.className = "case miss";

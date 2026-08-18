@@ -1,3 +1,5 @@
+import { changeColourShip } from "./changeColourShip.js";
+
 const DIRECTIONS = [
     [0, -1],
     [0, 1],
@@ -56,7 +58,7 @@ export function computerSunkShip(player) {
             player.caseTouch = findOgCase(player);
         }
     } else {
-        caseHit.className = "case sunk";
+        caseHit.className = "case touch";
         if (!player.sens)
             player.sens = DIRECTIONS[p[2] % 4];
         player.caseTouch = p;
@@ -68,6 +70,7 @@ export function computerSunkShip(player) {
         if (!player.shipsTouch.includes(shipTouch))
             player.shipsTouch.push(shipTouch);
         if (shipTouch.isSunk()) {
+            changeColourShip(player.gridDOM.children[1].children, shipTouch, "case sunk");
             const id = player.shipsTouch.indexOf(shipTouch);
             player.shipsTouch.splice(id, 1);
             player.sens = undefined;
