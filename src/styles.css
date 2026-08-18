@@ -78,7 +78,7 @@ h1 {
 }
 
 .ship-player {
-    background-color: #a52a2a48;
+    background-color: #921d1d67;
 }
 
 .touch {
@@ -86,7 +86,7 @@ h1 {
 }
 
 .sunk {
-    background-color: #290000;
+    background-color: #00084e;
 }
 
 @media (max-width: 768px) {

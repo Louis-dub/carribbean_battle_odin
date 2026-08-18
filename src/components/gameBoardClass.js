@@ -21,10 +21,14 @@ export class GameBoard {
         const p = [x, y];
         let result = 0;
 
+        console.log("new test");
         this.ships.forEach(ship => {
+            console.log("Ship.coor : ", JSON.stringify(ship.coor));
+            console.log("Hit : ", JSON.stringify(p));
             if (this.board[x][y] === "e" && ship.hit(p)) {
                 this.board[x][y] = "t";
                 result = 1;
+                console.log("lalalal");
             }
         });
         if (this.board[x][y] === "e") {
