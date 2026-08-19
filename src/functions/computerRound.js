@@ -13,9 +13,9 @@ export function isValidCase(x, y) {
 
 function findOgCase(player) {
     let p = player.caseTouch;
-    let nextP = player.caseTouch;
+    let nextP = [p[0] + player.sens[0], p[1] + player.sens[1]];
 
-    while (player.board.board[nextP[0]][nextP[1]] === "t") {
+    while (isValidCase(nextP[0], nextP[1]) && player.board.board[nextP[0]][nextP[1]] === "t") {
         p = nextP;
         nextP = [p[0] + player.sens[0], p[1] + player.sens[1]];
     }
@@ -48,6 +48,7 @@ export function computerSunkShip(player) {
             hit = player.board.receiveAttack(p[0], p[1]);
         }
     }
+    console.log(JSON.stringify(p));
     const caseHit = Array.from(player.gridDOM.children[1].children).find(c =>
         c.value === `${p[0]} ${p[1]}`
     );
@@ -55,7 +56,13 @@ export function computerSunkShip(player) {
         caseHit.className = "case miss";
         if (player.sens) {
             player.sens = [player.sens[0] * -1, player.sens[1] * -1];
+            console.log("J'appelle ogCase");
             player.caseTouch = findOgCase(player);
+            player.countSens++;
+            if (player.countSens === 2) {
+                player.sens = undefined;
+                player.countSens = 0;
+            }
         }
     } else {
         caseHit.className = "case touch";
@@ -67,6 +74,10 @@ export function computerSunkShip(player) {
             player.caseTouch = findOgCase(player);
         }
         const shipTouch = player.board.findShipHit(p);
+        if (!shipTouch) {
+            console.log("ERROR");
+            console.log(JSON.stringify(p));
+        }
         if (!player.shipsTouch.includes(shipTouch))
             player.shipsTouch.push(shipTouch);
         if (shipTouch.isSunk()) {
