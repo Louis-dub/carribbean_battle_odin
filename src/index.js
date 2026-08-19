@@ -1,6 +1,6 @@
 import './styles.css';
 import logo from './images/logo_battleship.png';
-import { btnLauchGame } from './placeShip.js';
+import { placeShip } from './placeShip.js';
 import { initBackground } from './backgroud/index.js';
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -16,6 +16,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 const content = document.getElementById("content");
-content.appendChild(btnLauchGame);
+content.appendChild(placeShip);
 
 const bgController = initBackground('pirate-bg', { particleCount: 46 });
