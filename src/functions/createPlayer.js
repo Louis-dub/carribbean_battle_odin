@@ -2,6 +2,7 @@ import { Player } from "../components/playerClass.js";
 import { createGrid } from "./createGridDOM.js";
 import { createShip } from "./createShip.js";
 import { changeColourShip } from "./changeColourShip.js";
+import { Ship } from "../components/shipClass.js";
 
 export function launchGame(ships) {
     const content = document.getElementById("content");
