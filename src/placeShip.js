@@ -39,7 +39,12 @@ selectShip.innerHTML = `
     <option value="man-o-war">Man-o'-war</option>
 `;
 
+const btnPlaceShip = document.createElement("button");
+btnPlaceShip.className = "btn-place-ship";
+btnPlaceShip.textContent = "Place Ship";
+
 handleShip.appendChild(selectShip);
+handleShip.appendChild(btnPlaceShip);
 
 placeShip.appendChild(grid);
 placeShip.appendChild(handleShip);

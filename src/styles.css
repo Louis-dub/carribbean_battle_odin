@@ -56,6 +56,7 @@ h1 {
     justify-content: flex-start;
     min-width: 200px;
     padding-top: 20px;
+    gap: 30px;
 }
 
 .handle-ship select {
@@ -70,7 +71,7 @@ h1 {
     cursor: pointer;
 }
 
-.launch-game {
+.launch-game, .btn-place-ship {
     cursor: pointer;
     font-family: "RocknRoll One", sans-serif;
     font-size: 1.5rem;
@@ -82,11 +83,11 @@ h1 {
     transition: transform 0.3s ease-in-out;
 }
 
-.launch-game:hover {
+.launch-game:hover, .btn-place-ship:hover {
     transform: scale(1.05);
 }
 
-.launch-game:active {
+.launch-game:active, .btn-place-ship:active {
     transform: scale(0.9);
 }
 
