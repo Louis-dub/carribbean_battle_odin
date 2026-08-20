@@ -42,6 +42,10 @@ selectShip.innerHTML = `
 `;
 
 selectShip.addEventListener("change", () => {
+    if (selectShip.value === "") {
+        document.removeEventListener("keydown")
+        return;
+    }
     Array.from(grid.children).forEach(c => c.className = "case");
     let p = [0, 0];
     let dir = [0, 1];
