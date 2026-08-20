@@ -23,7 +23,7 @@ export function moveShip(e, len, p) {
             break;
     }
     if (testWithLen
-        ? isValidCase(newP[0], newP[1] + len)
+        ? isValidCase(newP[0], newP[1] + len - 1)
         : isValidCase(newP[0], newP[1]))
         return newP;
     return p;

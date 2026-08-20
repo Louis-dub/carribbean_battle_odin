@@ -49,6 +49,7 @@ selectShip.addEventListener("change", () => {
         document.removeEventListener("keydown", (e) => {
             ogP = moveShip(e, parseInt(selectShip.value), ogP);
             p = [...ogP];
+            Array.from(grid.children).forEach(c => c.className = "case");
             for (let i = 0; i < parseInt(selectShip.value); i++) {
                 Array.from(grid.children).find(c => c.value === `${p[0]} ${p[1]}`).className = "case ship-player";
                 p = [p[0] + dir[0], p[1] + dir[1]];
@@ -58,6 +59,7 @@ selectShip.addEventListener("change", () => {
         document.addEventListener("keydown", (e) => {
             ogP = moveShip(e, parseInt(selectShip.value), ogP);
             p = [...ogP];
+            Array.from(grid.children).forEach(c => c.className = "case");
             for (let i = 0; i < parseInt(selectShip.value); i++) {
                 Array.from(grid.children).find(c => c.value === `${p[0]} ${p[1]}`).className = "case ship-player";
                 p = [p[0] + dir[0], p[1] + dir[1]];
