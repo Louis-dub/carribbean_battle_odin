@@ -1,23 +1,30 @@
 import { isValidCase } from "./computerRound.js";
 
 export function moveShip(e, len, p) {
-    let dir = [];
+    let newP = [];
+    let testWithLen = false;
 
     switch (e.key) {
         case "ArrowUp":
-            dir = [-1, 0];
+            newP = [p[0] - 1, p[1]];
             break;
         case "ArrowRight":
-            dir = [0, 1];
+            newP = [p[0], p[1] + 1];
+            testWithLen = true;
             break;
         case "ArrowDown":
-            dir = [1, 0];
+            newP = [p[0] + 1, p[1]];
             break;
         case "ArrowLeft":
-            dir = [0, -1];
+            newP = [p[0], p[1] - 1];
             break;
         default:
             return;
             break;
     }
+    if (testWithLen
+        ? isValidCase(newP[0], newP[1] + len)
+        : isValidCase(newP[0], newP[1]))
+        return newP;
+    return p;
 }
