@@ -1,6 +1,6 @@
 import './styles.css';
 import logo from './images/logo_battleship.png';
-import { player, computer } from './createPlayer.js';
+import { placeShip } from './placeShip.js';
 import { initBackground } from './backgroud/index.js';
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -16,12 +16,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 const content = document.getElementById("content");
-const grids = document.createElement("div");
-
-grids.className = "grids";
-grids.appendChild(player.gridDOM);
-grids.appendChild(computer.gridDOM);
-
-content.appendChild(grids);
+content.appendChild(placeShip);
 
 const bgController = initBackground('pirate-bg', { particleCount: 46 });

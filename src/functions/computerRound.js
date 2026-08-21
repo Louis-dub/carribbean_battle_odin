@@ -13,9 +13,9 @@ export function isValidCase(x, y) {
 
 function findOgCase(player) {
     let p = player.caseTouch;
-    let nextP = player.caseTouch;
+    let nextP = [p[0] + player.sens[0], p[1] + player.sens[1]];
 
-    while (player.board.board[nextP[0]][nextP[1]] === "t") {
+    while (isValidCase(nextP[0], nextP[1]) && player.board.board[nextP[0]][nextP[1]] === "t") {
         p = nextP;
         nextP = [p[0] + player.sens[0], p[1] + player.sens[1]];
     }
@@ -56,6 +56,11 @@ export function computerSunkShip(player) {
         if (player.sens) {
             player.sens = [player.sens[0] * -1, player.sens[1] * -1];
             player.caseTouch = findOgCase(player);
+            player.countSens++;
+            if (player.countSens === 2 || !isValidCase(player.caseTouch[0] + player.sens[0], player.caseTouch[1] + player.sens[1])) {
+                player.sens = undefined;
+                player.countSens = 0;
+            }
         }
     } else {
         caseHit.className = "case touch";

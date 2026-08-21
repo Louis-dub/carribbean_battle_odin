@@ -34,8 +34,7 @@ export class GameBoard {
     }
 
     findShipHit(p) {
-        return this.ships.find(ship => ship.coor[0][0] <= p[0] && ship.coor[1][0] >= p[0] &&
-            ship.coor[0][1] <= p[1] && ship.coor[1][1] >= p[1] === true);
+        return this.ships.find(ship => ship.hit(p));
     }
 
     findHitOnShip(ship) {

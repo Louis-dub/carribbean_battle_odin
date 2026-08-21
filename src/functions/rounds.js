@@ -1,6 +1,8 @@
 import { attack } from "./attack.js";
 import { computerSunkShip } from "./computerRound.js";
 
+let HITCOUNT = 0;
+
 export function computerRound(player) {
     if (player.shipsTouch.length === 0) {
         let p = [Math.floor(Math.random() * 12), Math.floor(Math.random() * 12)];
@@ -9,6 +11,11 @@ export function computerRound(player) {
         while (hit === 0) {
             p = [Math.floor(Math.random() * 12), Math.floor(Math.random() * 12)];
             hit = player.board.receiveAttack(p[0], p[1]);
+        }
+        if (HITCOUNT === 0) {
+            p = [0, 0];
+            hit = player.board.receiveAttack(p[0], p[1]);
+            HITCOUNT++;
         }
         const caseHit = Array.from(player.gridDOM.children[1].children).find(c =>
                 c.value === `${p[0]} ${p[1]}`

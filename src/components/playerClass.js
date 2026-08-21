@@ -15,6 +15,7 @@ export class Player {
         this.shipsTouch = [];
         this.caseTouch = undefined;
         this.sens = undefined;
+        this.countSens = 0;
     }
 
     createBoard(fleet) {
