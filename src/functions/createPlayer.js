@@ -9,7 +9,7 @@ export function launchGame(ships) {
     const player = new Player("player", "Your Fleet");
     const computer = new Player("computer", "Enemy Fleet");
 
-    player.board.ships = createShip();
+    player.board.ships = [...ships];
 
     createGrid(player);
     createGrid(computer, player);

@@ -1,6 +1,7 @@
 import { Ship } from "./components/shipClass.js";
 import { changeColourShip } from "./functions/changeColourShip.js";
 import { launchGame } from "./functions/createPlayer.js";
+import { verifCollideShip } from "./functions/createShip.js";
 import { moveShip, rotateShip } from "./functions/moveShip.js";
 
 function handleKeydown(e, p, ogP, dir) {
@@ -85,6 +86,7 @@ selectShip.addEventListener("change", () => {
     if (selectShip.value === "") {
         document.removeEventListener("keydown", (e) => {
             if (!listPlaceShip[parseInt(selectShip.value) - 2]) {
+                errorMessage.textContent = "";
                 const newVal = handleKeydown(e, p, ogP, dir);
                 p = [...newVal.p];
                 ogP = [...newVal.ogP];
@@ -96,6 +98,7 @@ selectShip.addEventListener("change", () => {
     } else {
         document.addEventListener("keydown", (e) => {
             if (!listPlaceShip[parseInt(selectShip.value) - 2]) {
+                errorMessage.textContent = "";
                 const newVal = handleKeydown(e, p, ogP, dir);
                 p = [...newVal.p];
                 ogP = [...newVal.ogP];
@@ -133,13 +136,17 @@ btnPlaceShip.addEventListener("click", () => {
     if (!currVal.place) {
         errorMessage.textContent = "Select a Ship";
     } else if (!listPlaceShip[currVal.len - 2]) {
-        listPlaceShip[currVal.len - 2] = true;
         let p = [...currVal.ogP];
         for (let i = 0; i < currVal.len - 1; i++)
             p = [p[0] + currVal.dir[0], p[1] + currVal.dir[1]];
-        ships.push(new Ship(currVal.len, currVal.ogP, p));
-        console.log(JSON.stringify(ships));
-        changeColourShip(grid.children, ships[ships.length - 1], "case touch");
+        if (verifCollideShip(currVal.ogP, p, ships)) {
+            errorMessage.textContent = "You cannot place your ship here";
+        } else {
+            listPlaceShip[currVal.len - 2] = true;
+            ships.push(new Ship(currVal.len, currVal.ogP, p));
+            console.log(JSON.stringify(ships));
+            changeColourShip(grid.children, ships[ships.length - 1], "case touch");
+        }
     }
 });
 
