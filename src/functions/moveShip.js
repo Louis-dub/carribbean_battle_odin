@@ -19,7 +19,7 @@ export function moveShip(e, len, p) {
             newP = [p[0], p[1] - 1];
             break;
         default:
-            return;
+            return p;
             break;
     }
     if (testWithLen
