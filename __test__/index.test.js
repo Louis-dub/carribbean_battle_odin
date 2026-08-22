@@ -2,7 +2,7 @@ jest.mock("../src/styles.css", () => ({}), { virtual: true });
 jest.mock("../src/images/logo_battleship.png", () => "logo-url", { virtual: true });
 
 jest.mock("../src/placeShip.js", () => ({
-    placeShip: document.createElement("div"),
+    placeShip: global.document.createElement("div"),
 }));
 
 jest.mock("../src/backgroud/index.js", () => ({

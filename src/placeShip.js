@@ -83,6 +83,8 @@ selectShip.addEventListener("change", () => {
     let ogP = [0, 0];
     let dir = [0, 1];
     let len = parseInt(selectShip.value);
+    currVal.ogP = [0, 0];
+    currVal.dir = [0, 1];
     if (selectShip.value === "") {
         document.removeEventListener("keydown", (e) => {
             if (!listPlaceShip[parseInt(selectShip.value) - 2]) {

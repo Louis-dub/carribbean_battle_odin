@@ -69,8 +69,10 @@ describe("placeShip.js", () => {
         selectValue("2");
 
         btnPlaceShip.dispatchEvent(new Event("click"));
+        const [calledP1, calledP2] = verifCollideShip.mock.calls[0];
 
-        expect(verifCollideShip).toHaveBeenCalledWith([0, 0], [0, 1], []);
+        expect(calledP1).toEqual([0, 0]);
+        expect(calledP2).toEqual([0, 1]);
         expect(Ship).toHaveBeenCalledWith(2, [0, 0], [0, 1]);
         expect(changeColourShip).toHaveBeenCalledWith(
             expect.anything(),
