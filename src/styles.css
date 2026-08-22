@@ -161,6 +161,10 @@ h1 {
     background-color: #00084e;
 }
 
+.end-message {
+    font-size: 2rem;
+}
+
 @media (max-width: 768px) {
     .grids {
         gap: 12px;

@@ -32,6 +32,21 @@ export function computerRound(player) {
     }
 }
 
+export function endGame(message) {
+    const endMessage = document.createElement("h3");
+    endMessage.className = "end-message";
+    endMessage.textContent = message;
+
+    const playAgain = document.createElement("button");
+    playAgain.textContent = "Play Again";
+    playAgain.className = "btn-play-again";
+    playAgain.addEventListener("click", () => {location.reload()});
+    const content = document.getElementById("content");
+    content.innerHTML = "";
+    content.appendChild(endMessage);
+    content.appendChild(playAgain);
+}
+
 export function roundPlayer(grid, computer, pos, player) {
     if (!pos)
         return false;
@@ -41,17 +56,13 @@ export function roundPlayer(grid, computer, pos, player) {
         if (computer.isLose()) {
             grid.style.cursor = "auto";
             computer.play = false;
-            document.getElementById("content").innerHTML += `
-                <h3>You win !!!</h3>
-            `;
+            endGame("WIN !!!");
         } else {
             computerRound(player);
             if (player.isLose()) {
                 grid.style.cursor = "auto";
                 computer.play = false;
-                document.getElementById("content").innerHTML += `
-                    <h3>You Lose !!!</h3>
-                `;                
+                endGame("LOSS !!!");               
             }
         }
     }
