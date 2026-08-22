@@ -33,6 +33,9 @@ export function computerRound(player) {
 }
 
 export function endGame(message) {
+    const endScreen = document.createElement("div");
+    endScreen.className = "end-screen";
+
     const endMessage = document.createElement("h3");
     endMessage.className = "end-message";
     endMessage.textContent = message;
@@ -41,10 +44,12 @@ export function endGame(message) {
     playAgain.textContent = "Play Again";
     playAgain.className = "btn-play-again";
     playAgain.addEventListener("click", () => {location.reload()});
+
+    endScreen.appendChild(endMessage);
+    endScreen.appendChild(playAgain);
     const content = document.getElementById("content");
     content.innerHTML = "";
-    content.appendChild(endMessage);
-    content.appendChild(playAgain);
+    content.appendChild(endScreen);
 }
 
 export function roundPlayer(grid, computer, pos, player) {
