@@ -144,7 +144,6 @@ btnPlaceShip.addEventListener("click", () => {
         } else {
             listPlaceShip[currVal.len - 2] = true;
             ships.push(new Ship(currVal.len, currVal.ogP, p));
-            console.log(JSON.stringify(ships));
             changeColourShip(grid.children, ships[ships.length - 1], "case touch");
         }
     }
