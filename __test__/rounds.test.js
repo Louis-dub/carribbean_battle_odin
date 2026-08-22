@@ -212,34 +212,32 @@ describe("roundPlayer", () => {
     });
 
     it("should update the grid cursor and display win message when attack is successful and computer is losing", () => {
-        mockComputer.isLose.mockReturnValue(true);
-        mockPlayer.isLose.mockReturnValue(false);
+    mockComputer.isLose.mockReturnValue(true);
+    mockPlayer.isLose.mockReturnValue(false);
 
-        document.getElementById = jest.fn().mockReturnValue({
-            innerHTML: "",
-        });
+    const fakeContent = document.createElement("div");
+    document.getElementById = jest.fn().mockReturnValue(fakeContent);
 
-        roundPlayer(mockGrid, mockComputer, mockPos, mockPlayer);
+    roundPlayer(mockGrid, mockComputer, mockPos, mockPlayer);
 
-        expect(mockGrid.style.cursor).toBe("auto");
-        expect(mockComputer.play).toBe(false);
-        expect(document.getElementById).toHaveBeenCalledWith("content");
-        expect(document.getElementById("content").innerHTML).toContain("You win !!!");
-    });
+    expect(mockGrid.style.cursor).toBe("auto");
+    expect(mockComputer.play).toBe(false);
+    expect(document.getElementById).toHaveBeenCalledWith("content");
+    expect(fakeContent.innerHTML).toContain("WIN !!!");
+});
 
     it("should update the grid cursor and display lose message when attack is successful and player is losing", () => {
         mockComputer.isLose.mockReturnValue(false);
         mockPlayer.isLose.mockReturnValue(true);
 
-        document.getElementById = jest.fn().mockReturnValue({
-            innerHTML: "",
-        });
+        const fakeContent = document.createElement("div");
+        document.getElementById = jest.fn().mockReturnValue(fakeContent);
 
         roundPlayer(mockGrid, mockComputer, mockPos, mockPlayer);
 
         expect(mockGrid.style.cursor).toBe("auto");
         expect(mockComputer.play).toBe(false);
         expect(document.getElementById).toHaveBeenCalledWith("content");
-        expect(document.getElementById("content").innerHTML).toContain("You Lose !!!");
+        expect(fakeContent.innerHTML).toContain("LOSS !!!");
     });
 });
